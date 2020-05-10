@@ -8,14 +8,14 @@ export default function (file) {
     fileReader.onload = function(ev) {
       console.log('event', ev);
       var data = fileReader.result;
-      pdfjs.getDocument(data).then(function getPdfHelloWorld(pdf) {
+      pdfjs.getDocument(data).promise.then(function getPdfHelloWorld(pdf) {
         //
         // Fetch the first page
         //
         console.log('pdf', pdf)
         pdf.getPage(1).then(function getPageHelloWorld(page) {
           var scale = 1.5;
-          var viewport = page.getViewport(scale);
+          var viewport = page.getViewport({scale: scale});
 
           //
           // Prepare canvas using PDF page dimensions
