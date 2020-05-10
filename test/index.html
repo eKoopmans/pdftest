@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <input id='pdffile' type='file'/>
+
+    <!-- <script src="../dist/dist.iife.js"></script> -->
+    <!-- <script src="../dist/index.js"></script> -->
+    <script src="../dist/main.js"></script>
+    <script>
+      var pdfFile = document.getElementById('pdffile');
+      pdfFile.onchange = function (e) {
+        var file = e.target.files[0];
+        pdftest.test(file);
+      }
+
+      console.log(pdftest);
+    </script>
+  </body>
+</html>
