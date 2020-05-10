@@ -19,8 +19,8 @@ module.exports = env => {
       path: path.resolve(__dirname, 'dist'),
       filename: `main${minStr}.js`,
       library: 'pdftest',
+      libraryExport: 'default',
       // libraryTarget: 'umd',
-      // libraryExport: 'default',
       // umdNamedDefine: true,
     },
     plugins: [

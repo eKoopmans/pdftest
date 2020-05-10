@@ -1,26 +1,12 @@
 import pdfjs from 'pdfjs-dist';
-// import {getDocument as pdfjsGetDocument} from 'pdfjs-dist';
-// pdfjs = require('pdfjs-dist');
 
-// console.log(pdfjs);
-// console.log(pdfjs.getDocument);
-
-// console.log(pdfjsGetDocument);
-console.log(pdfjs.getDocument);
-
-export const test1 = 'a';
-export const test2 = 'b';
-export const test3 = 'c';
-
-export const test = function (file) {
-// export default function (file) {
+export default function (file) {
     const isFile = file instanceof File;
 
   if (isFile) {
     var fileReader = new FileReader();
     fileReader.onload = function(ev) {
       console.log('event', ev);
-      // var data = new Uint8Array(fileReader.result);
       var data = fileReader.result;
       pdfjs.getDocument(data).then(function getPdfHelloWorld(pdf) {
         //
