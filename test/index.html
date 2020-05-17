@@ -2,15 +2,18 @@
 <html>
   <head></head>
   <body>
-    <input id='pdffile' type='file'/>
+    <input id='pdffile1' type='file'/>
+    <input id='pdffile2' type='file'/>
+    <button onclick="compare()">Compare PDFs</button>
 
     <script src="../dist/main.js"></script>
     <script>
-      var pdfFile = document.getElementById('pdffile');
-      pdfFile.onchange = function (e) {
-        var file = e.target.files[0];
-        pdftest(file);
-      };
+      var pdfFile1 = document.getElementById('pdffile1');
+      var pdfFile2 = document.getElementById('pdffile2');
+
+      function compare() {
+        pdftest(pdfFile1.files[0], pdfFile2.files[0]).then(console.log);
+      }
     </script>
   </body>
 </html>
