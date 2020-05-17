@@ -30,7 +30,7 @@ async function getPageImage(pdfObject, i, targetWidth) {
   })
 }
 
-async function pdftest(pdf1, pdf2, settings) {
+async function pdfCompare(pdf1, pdf2, settings) {
   settings = {
     failureThreshold: 0,
     failureThresholdType: 'pixel',
@@ -90,4 +90,4 @@ async function pdftest(pdf1, pdf2, settings) {
   return result
 }
 
-export default pdftest
+export default pdfCompare

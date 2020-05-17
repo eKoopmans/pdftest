@@ -1,12 +1,14 @@
 {
-  "name": "pdftest",
+  "name": "pdfcompare",
   "version": "0.0.1",
-  "description": "Client-side PDF testing library",
+  "description": "Client-side visual testing library for PDFs",
   "main": "src/index.js",
   "keywords": [
     "pdf",
     "testing",
     "visual",
+    "comparison",
+    "diff",
     "js",
     "javascript",
     "client-side"
