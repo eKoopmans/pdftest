@@ -1,5 +1,5 @@
 {
-  "name": "pdfcompare",
+  "name": "pdftest",
   "version": "0.0.1",
   "description": "Client-side visual testing library for PDFs",
   "main": "src/index.js",
