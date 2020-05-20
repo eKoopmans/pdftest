@@ -20,6 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "commander": "^5.1.0",
     "pdfjs-dist": "^2.3.200",
     "pixelmatch": "^5.2.0"
   },
@@ -27,6 +28,9 @@
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.7.0",
     "webpack-cli": "^3.3.11"
+  },
+  "bin": {
+    "pdftest": "bin/pdftest.js"
   },
   "scripts": {
     "build": "webpack --env=prod",
