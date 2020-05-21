@@ -90,4 +90,6 @@ export async function compare(pdf1, pdf2, settings) {
   return result
 }
 
-export default pdfCompare
+export function serve(port) {
+  console.log('serving on port:', port)
+}

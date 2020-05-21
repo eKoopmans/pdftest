@@ -21,6 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^5.1.0",
+    "esm": "^3.2.25",
     "pdfjs-dist": "^2.3.200",
     "pixelmatch": "^5.2.0"
   },
@@ -35,6 +36,7 @@
   "scripts": {
     "build": "webpack --env=prod",
     "dev": "webpack --env=dev",
+    "serve": "npx ./bin/pdftest.js serve",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

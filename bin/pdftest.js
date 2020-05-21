@@ -1,19 +1,32 @@
 #!/usr/bin/env node
 
 const { program } = require('commander')
+const esrequire = require('esm')(module)
+const fs = require('fs')
 
+const pkg = require('../package.json')
+const pdftest = esrequire('../src/index')
+
+program.version(pkg.version, '-v, --version')
 program
   .command('serve [port]')
   .description('Serve PDF files')
-  .action(port => {
-    console.log(`serving on port ${port}`)
-  })
-
+  .action(pdftest.serve)
 program
   .command('compare <file1> <file2>')
   .description('Compare two PDF files')
-  .action((file1, file2) => {
-    console.log(file1, file2)
-  })
-
+  .action(compare)
 program.parse(process.argv)
+
+function compare(file1, file2) {
+  // TODO: Update pdftest.compare for Node compatibility:
+  //    - avoid reference to File
+  //    - use `npm install --save canvas`
+  //    - see example:
+  //      https://github.com/mozilla/pdf.js/blob/master/examples/node/pdf2png/pdf2png.js
+  const data = [file1, file2].map(filename => {
+    return new Uint8Array(fs.readFileSync(filename))
+  })
+  const res = pdftest.compare(data[0], data[1])
+  console.log(res)
+}
