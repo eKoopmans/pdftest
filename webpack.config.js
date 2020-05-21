@@ -19,8 +19,8 @@ module.exports = env => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: `main${minStr}.js`,
-      library: 'pdfCompare',
-      libraryExport: 'default',
+      library: 'pdftest',
+      // libraryExport: 'default',
       // libraryTarget: 'umd',
       // umdNamedDefine: true,
     },
