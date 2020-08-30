@@ -15,7 +15,7 @@ async function getPageImage(pdfObject, i, targetWidth) {
     return null
   }
   const page = await pdfObject.getPage(i + 1)
-  const scale = targetWidth ? Math.floor(page.view[2]) / targetWidth : 1;
+  const scale = targetWidth ? targetWidth / Math.floor(page.view[2]) : 1;
 
   const viewport = page.getViewport({scale: scale})
   const canvas = document.createElement('canvas')
@@ -23,7 +23,11 @@ async function getPageImage(pdfObject, i, targetWidth) {
   canvas.height = viewport.height
   const context = canvas.getContext('2d')
 
+  // Note: page.render can take a long time (e.g. 2+ min for an 80MB PDF).
+  // Performance could be improved by loading pdf.js with a worker-loader - see:
+  // https://github.com/mozilla/pdf.js/tree/master/examples/webpack#worker-loading
   await page.render({canvasContext: context, viewport: viewport}).promise
+
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
   return Object.assign(imageData, {
     scale: scale,
@@ -61,7 +65,7 @@ export async function compare(pdf1, pdf2, settings) {
     if (!pageImg1 || !pageImg2) {
       console.error('missing page!', pageImg1, pageImg2)
     }
-    else if (pageImg1.width !== pageImg2.width || pageImg2.height !== pageImg2.height) {
+    else if (pageImg1.width !== pageImg2.width || pageImg1.height !== pageImg2.height) {
       console.error('different sizes!', pageImg1, pageImg2)
     }
     else {
