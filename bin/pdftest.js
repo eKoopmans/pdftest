@@ -9,7 +9,7 @@ const pdftest = esrequire('../src/index')
 
 program.version(pkg.version, '-v, --version')
 program
-  .command('serve [port]')
+  .command('serve [port] [root]')
   .description('Serve PDF files')
   .action(pdftest.serve)
 program

@@ -37,7 +37,7 @@
   "scripts": {
     "build": "webpack --env=prod",
     "dev": "webpack --env=dev",
-    "serve": "npx ./bin/pdftest.js serve",
+    "serve": "npx ./bin/pdftest.js serve 8000 ./test/ref/",
     "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
