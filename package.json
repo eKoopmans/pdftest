@@ -22,6 +22,7 @@
   "dependencies": {
     "commander": "^5.1.0",
     "esm": "^3.2.25",
+    "express": "^4.17.1",
     "pdfjs-dist": "^2.3.200",
     "pixelmatch": "^5.2.0"
   },
