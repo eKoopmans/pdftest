@@ -1,5 +1,5 @@
 import pixelmatch from 'pixelmatch'
-import { getPdfObjects, getPageImages } from './read-pdf'
+import { getPdfObjects, getPageImages } from './util/read-pdf'
 
 async function comparePage(pdfObjects, page, settings) {
   // Initialise the page match results.
