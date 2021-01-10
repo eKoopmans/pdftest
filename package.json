@@ -27,6 +27,8 @@
     "pixelmatch": "^5.2.0"
   },
   "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.12.1",
+    "jest": "^26.6.3",
     "webpack": "^4.43.0",
     "webpack-bundle-analyzer": "^3.7.0",
     "webpack-cli": "^3.3.11"
@@ -38,6 +40,6 @@
     "build": "webpack --env=prod",
     "dev": "webpack --env=dev",
     "serve": "npx ./bin/pdftest.js serve 8000 ./test/ref/",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   }
 }
