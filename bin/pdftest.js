@@ -18,7 +18,7 @@ program
   .action(compare)
 program.parse(process.argv)
 
-function compare(file1, file2) {
+async function compare(file1, file2) {
   // TODO: Update pdftest.compare for Node compatibility:
   //    - avoid reference to File
   //    - use `npm install --save canvas`
@@ -27,6 +27,6 @@ function compare(file1, file2) {
   const data = [file1, file2].map(filename => {
     return new Uint8Array(fs.readFileSync(filename))
   })
-  const res = pdftest.compare(data[0], data[1])
+  const res = await pdftest.compare(data[0], data[1])
   console.log(res)
 }

@@ -56,10 +56,12 @@ async function compare(pdf1, pdf2, settings) {
     pageResults: [],
   }
 
-  for (var i=0; i<result.nPages; i++) {
-    result.pageResults[i] = comparePage(pdfObjects, i, settings)
+  // Compare all pages asynchronously and wait for all to finish.
+  const pagePromises = new Array(result.nPages).map(async (_val, i) => {
+    result.pageResults[i] = await comparePage(pdfObjects, i, settings)
     result.match = result.match && result.pageResults[i].match
-  }
+  })
+  await Promise.all(pagePromises)
 
   return result
 }
