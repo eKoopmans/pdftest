@@ -11,7 +11,7 @@ function readFileAsync(file) {
 }
 
 async function getPdfObject(src) {
-  if (src instanceof File) {
+  if (typeof File !== 'undefined' && src instanceof File) {
     src = await readFileAsync(src)
   }
   return await pdfjs.getDocument(src).promise
@@ -63,4 +63,4 @@ async function getPageImages(pdfObjects, page) {
   return [ pageImg1, pageImg2, error ]
 }
 
-export { getPdfObjects, getPageImages }
+export { getPdfObject, getPdfObjects, getPageImage, getPageImages }
