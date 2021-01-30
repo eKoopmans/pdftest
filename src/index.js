@@ -1,7 +1,7 @@
-import compare from './compare'
-import serve from './serve'
+import * as client from './client'
+import * as server from './server'
 
 export {
-  compare,
-  serve,
+  client,
+  server,
 }

@@ -10,7 +10,7 @@ module.exports = env => {
 
   return {
     mode: mode,
-    entry: './src/index.js',
+    entry: './src/client/index.js',
     watch: watch,
     watchOptions: {
       ignored: /node_modules/,

@@ -11,7 +11,7 @@ program.version(pkg.version, '-v, --version')
 program
   .command('serve [port] [root]')
   .description('Serve PDF files')
-  .action(pdftest.serve)
+  .action(pdftest.server.serve)
 program
   .command('compare <file1> <file2>')
   .description('Compare two PDF files')
@@ -27,6 +27,6 @@ async function compare(file1, file2) {
   const data = [file1, file2].map(filename => {
     return new Uint8Array(fs.readFileSync(filename))
   })
-  const res = await pdftest.compare(data[0], data[1])
+  const res = await pdftest.client.compare(data[0], data[1])
   console.log(res)
 }
