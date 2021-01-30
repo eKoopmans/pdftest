@@ -1,4 +1,14 @@
-import pdfjs from 'pdfjs-dist'
+// 2021-01-13 In pdfjs, workerSrc should always be specified, rather than relying
+// on a fallback. This solves several issues:
+//  - Client: DOMException: Failed to execute 'importScripts' on 'WorkerGlobalScope'.
+//    - Client works without this fix, but throws an exception if inspector is open.
+//  - Server (unverified): No "GlobalWorkerOptions.workerSrc" specified.
+//  - Does *not* solve the "Warning: setting up fake worker" issue
+//    - In fact, I believe this explicitly forces the fake worker.
+// More info: https://github.com/mozilla/pdf.js/issues/10478#issuecomment-518673665
+import pdfjs from 'pdfjs-dist/build/pdf'
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 function readFileAsync(file) {
   // Create a promise that resolves when the file is loaded.
