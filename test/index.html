@@ -14,7 +14,7 @@
       var pdfFile2 = document.getElementById('pdffile2');
 
       function compare() {
-        pdftest.compare(pdfFile1.files[0], pdfFile2.files[0]).then(console.log);
+        pdftest.client.compare(pdfFile1.files[0], pdfFile2.files[0]).then(console.log);
       }
     </script>
   </body>

@@ -1,5 +1,11 @@
 import compare from './compare'
+import * as api from '../shared/api'
+
+const client = {
+  compare,
+}
 
 export {
-  compare,
+  client,
+  api
 }

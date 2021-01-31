@@ -21,6 +21,7 @@ function readFileAsync(file) {
 }
 
 async function getPdfObject(src) {
+  // Note: This step is also required for Blob inputs.
   if (typeof File !== 'undefined' && src instanceof File) {
     src = await readFileAsync(src)
   }
