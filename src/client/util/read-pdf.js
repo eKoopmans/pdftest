@@ -1,3 +1,7 @@
+import pdfjs from 'pdfjs-dist/build/pdf'
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+import { get } from '../../shared/api'
+
 // 2021-01-13 In pdfjs, workerSrc should always be specified, rather than relying
 // on a fallback. This solves several issues:
 //  - Client: DOMException: Failed to execute 'importScripts' on 'WorkerGlobalScope'.
@@ -6,8 +10,6 @@
 //  - Does *not* solve the "Warning: setting up fake worker" issue
 //    - In fact, I believe this explicitly forces the fake worker.
 // More info: https://github.com/mozilla/pdf.js/issues/10478#issuecomment-518673665
-import pdfjs from 'pdfjs-dist/build/pdf'
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
 pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker
 
 function readFileAsync(file) {
@@ -24,7 +26,10 @@ async function getPdfObject(src) {
   // Note: This step is also required for Blob inputs.
   if (typeof File !== 'undefined' && src instanceof File) {
     src = await readFileAsync(src)
+  } else if (typeof src === 'string') {
+    src = await get(src)
   }
+
   return await pdfjs.getDocument(src).promise
 }
 
