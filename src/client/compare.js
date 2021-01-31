@@ -1,5 +1,6 @@
 import pixelmatch from 'pixelmatch'
 import { getPdfObjects, getPageImages } from './util/read-pdf'
+import { getSnapshot } from '../shared/api'
 
 async function comparePage(pdfObjects, page, settings) {
   // Initialise the page match results.
@@ -37,7 +38,7 @@ async function comparePage(pdfObjects, page, settings) {
   }
 }
 
-async function compare(pdf1, pdf2, settings) {
+export async function compare(pdf1, pdf2, settings) {
   // Set up default settings for pixelmatch.
   settings = {
     failureThreshold: 0,
@@ -66,4 +67,7 @@ async function compare(pdf1, pdf2, settings) {
   return result
 }
 
-export default compare
+export async function compareToSnapshot(pdf, snapshotName, settings) {
+  const snapshot = await getSnapshot(snapshotName, pdf)
+  return await compare(pdf, snapshot, settings)
+}
