@@ -2,12 +2,20 @@ const state = {
   connection: null,
 }
 
-export function connect(url) {
+export async function connect(url) {
   state.connection = url
+  return await handshake()
 }
 
 export function getConnection() {
   return state.connection
+}
+
+async function handshake() {
+  if (await get('', 'text')) {
+    return console.log(`pdftest: Successfully connected to ${getConnection()}.`)
+  }
+  return console.error(`pdftest: Failed to connect to ${getConnection()}.`)
 }
 
 /**

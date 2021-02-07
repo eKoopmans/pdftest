@@ -23,10 +23,18 @@ function handlePostPut(root) {
   }
 }
 
+function handleHandshake(req, res, next) {
+  if (req.method === 'GET' && req.url === '/') {
+    return res.status(200).send('OK')
+  }
+  next()
+}
+
 function setupServer(app, root) {
   app.use(cors())
   app.use(express.raw({ type: 'application/pdf' }))
   app.use(handlePostPut(root))
+  app.use(handleHandshake)
   app.use(express.static(root))
 }
 
