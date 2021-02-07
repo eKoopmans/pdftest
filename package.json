@@ -35,12 +35,12 @@
     "webpack-cli": "^3.3.11"
   },
   "bin": {
-    "pdftest": "bin/pdftest.js"
+    "pdftest": "./bin/pdftest.js"
   },
   "scripts": {
     "build": "webpack --env=prod",
     "dev": "webpack --env=dev",
-    "serve": "npx ./bin/pdftest.js serve 8000 ./test/ref/",
+    "serve": "npx ./bin/pdftest.js serve 3000 ./test/ref/",
     "test": "jest"
   }
 }
