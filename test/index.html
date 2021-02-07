@@ -12,9 +12,10 @@
     <script>
       var pdfFile1 = document.getElementById('pdffile1');
       var pdfFile2 = document.getElementById('pdffile2');
+      pdftest.api.connect('http://localhost:3000');
 
       function compare() {
-        pdftest.client.compare(pdfFile1.files[0], pdfFile2.files[0]).then(console.log);
+        pdftest.compare(pdfFile1.files[0], pdfFile2.files[0]).then(console.log);
       }
     </script>
   </body>

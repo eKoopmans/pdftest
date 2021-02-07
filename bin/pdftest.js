@@ -5,13 +5,14 @@ const esrequire = require('esm')(module)
 const fs = require('fs')
 
 const pkg = require('../package.json')
-const pdftest = esrequire('../src/index')
+const pdftestServer = esrequire('../src/server')
+const pdftestClient = esrequire('../src/client')
 
 program.version(pkg.version, '-v, --version')
 program
   .command('serve [port] [root]')
   .description('Serve PDF files')
-  .action(pdftest.server.serve)
+  .action(pdftestServer.serve)
 program
   .command('compare <file1> <file2>')
   .description('Compare two PDF files')
@@ -27,6 +28,6 @@ async function compare(file1, file2) {
   const data = [file1, file2].map(filename => {
     return new Uint8Array(fs.readFileSync(filename))
   })
-  const res = await pdftest.client.compare(data[0], data[1])
+  const res = await pdftestClient.compare(data[0], data[1])
   console.log(res)
 }
