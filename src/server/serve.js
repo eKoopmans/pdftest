@@ -24,7 +24,7 @@ function handlePostPut(root) {
 }
 
 function handleHandshake(req, res, next) {
-  if (req.method === 'GET' && req.url === '/') {
+  if (['GET', 'HEAD'].includes(req.method) && req.url === '/') {
     return res.status(200).send('OK')
   }
   next()
