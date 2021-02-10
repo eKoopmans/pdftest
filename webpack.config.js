@@ -8,9 +8,30 @@ module.exports = env => {
   const minStr = isDev ? '' : '.min';
   const watch = isDev;
 
-  return {
-    mode: mode,
-    entry: './src/client/index.js',
+  const builds = {
+    browser: {
+      mode,
+      entry: './src/client/index.js',
+      filename: `pdftest.client${minStr}.js`,
+      libraryTarget: 'umd',
+      umdNamedDefine: true,
+      resolve: {
+        fallback: { url: require.resolve('url') },
+      },
+    },
+    node: {
+      mode: 'development',
+      entry: './src/index.js',
+      filename: `pdftest.cjs.js`,
+      libraryTarget: 'commonjs2',
+      externals: ['express', 'fs', 'path', /pdfjs/, 'pixelmatch'],
+      externalsType: 'commonjs',
+    }
+  };
+
+  return Object.values(builds).map(build => ({
+    mode: build.mode,
+    entry: build.entry,
     watch: watch,
     watchOptions: {
       ignored: /node_modules/,
@@ -18,12 +39,15 @@ module.exports = env => {
     devtool: 'source-map',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: `main${minStr}.js`,
+      filename: build.filename,
       library: 'pdftest',
-      // libraryExport: 'default',
-      // libraryTarget: 'umd',
-      // umdNamedDefine: true,
+      libraryTarget: build.libraryTarget,
+      umdNamedDefine: build.umdNamedDefine,
     },
+    node: false,
+    externals: build.externals,
+    externalsType: build.externalsType,
+    resolve: build.resolve,
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
@@ -35,5 +59,5 @@ module.exports = env => {
         statsOptions: { source: false },
       }),
     ],
-  };
+  }));
 };
