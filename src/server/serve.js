@@ -45,9 +45,15 @@ function serve(port, root) {
   const app = express()
   setupServer(app, root)
 
+  let serverIsListening
+  const serverPromise = new Promise(resolve => { serverIsListening = resolve })
+
   app.listen(port, () => {
     console.log(`pdftest: Serving '${root}' at http://localhost:${port}`)
+    serverIsListening()
   })
+
+  return serverPromise
 }
 
 export default serve
