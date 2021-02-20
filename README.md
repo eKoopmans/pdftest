@@ -20,7 +20,17 @@ In most use cases you will need to start the `pdftest` server before running you
     "test": "start-server-and-test test:serve http://localhost:3000 test:run",
     ```
 
-2. **`npm-run-all` and `wait-on`:**
+2. **`pdftest start` and `pdftest stop`:**
+
+    This option is built-in and requires no extra dependencies - its main disadvantage is that it will not automatically stop the server if something goes wrong. Active processes are tracked in a `data.json` file, which `pdftest stop` references to kill the process. In rare cases this approach could result in "orphaned" background processes.
+    
+    To use it in your npm scripts:
+
+    ```
+    "test": pdftest start 3000 && karma start && pdftest stop 3000",
+    ```
+
+3. **`npm-run-all` and `wait-on`:**
 
     Install `npm-run-all` and `wait-on` as dev dependencies (`npm i -D npm-run-all wait-on`), then use in your npm scripts:
 
@@ -30,7 +40,7 @@ In most use cases you will need to start the `pdftest` server before running you
     "test": "npm-run-all --parallel --race test:serve test:run",
     ```
 
-3. **Using `&` (not recommended):**
+4. **Using `&` (not recommended):**
 
     - You may use `&` to run the server and tests simultaneously, e.g. `pdftest serve 3000 & karma start`
     - This requires no additional dependencies, however:
