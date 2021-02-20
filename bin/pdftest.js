@@ -49,7 +49,7 @@ function start(port, root) {
 
   stop(port)
 
-  console.log(`pdftest: Starting port ${port}`)
+  console.log(`pdftest: Starting server${port ? ` on port ${port}` : ''}`)
   const serverProcess = spawn('node', [__filename, 'serve', ...args], {
     stdio: [process.stdin, process.stdout, process.stderr],
     detached: true,
@@ -65,7 +65,7 @@ function stop(port) {
   const data = fs.existsSync(datastore) ? JSON.parse(fs.readFileSync(datastore) || '{}') : {}
 
   if (data[port]) {
-    console.log(`pdftest: Stopping port ${port}`)
+    console.log(`pdftest: Stopping server${port ? ` on port ${port}` : ''}`)
     try { process.kill(data[port].pid) } catch {}
     delete data[port]
   }
