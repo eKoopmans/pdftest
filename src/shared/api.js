@@ -12,10 +12,25 @@ export function getConnection() {
 }
 
 async function handshake() {
-  if (await get('', 'text')) {
+  try {
+    await get('', 'text')
     return console.log(`pdftest: Successfully connected to ${getConnection()}.`)
+  } catch (e) {
+    throw new Error(`Failed to connect to ${getConnection()}: ${e.message}`)
   }
-  return console.error(`pdftest: Failed to connect to ${getConnection()}.`)
+}
+
+function verifyConnection() {
+  if (!getConnection()) {
+    throw new Error('Not connected to a server. Use api.connect(url) first.')
+  }
+}
+
+async function handleResponse(response, returnType) {
+  if (!response.ok) {
+    throw new Error(`Server returned a status of ${response.status}.`)
+  }
+  return await response[returnType]()
 }
 
 /**
@@ -24,16 +39,9 @@ async function handshake() {
  * @param {string} [returnType='arrayBuffer'] One of 'arrayBuffer' or 'blob' (see fetch API).
  */
 export async function get(filepath, returnType='arrayBuffer') {
-  if (!state.connection) {
-    return console.error('pdftest.api.get: Not connected to a server. Use api.connect(url) first.')
-  }
-
-  try {
-    const response = await fetch(`${state.connection}/${filepath}`)
-    return response.ok ? await response[returnType]() : undefined
-  } catch (e) {
-    return undefined
-  }
+  verifyConnection()
+  const response = await fetch(`${getConnection()}/${filepath}`)
+  return await handleResponse(response, returnType)
 }
 
 /**
@@ -43,19 +51,12 @@ export async function get(filepath, returnType='arrayBuffer') {
  * @param {string} [returnType='arrayBuffer'] One of 'arrayBuffer' or 'blob' (see fetch API).
  */
 export async function getSnapshot(filepath, defaultValue, returnType='arrayBuffer') {
-  if (!state.connection) {
-    return console.error('pdftest.api.getSnapshot: Not connected to a server. Use api.connect(url) first.')
-  }
-
-  try {
-    const response = await fetch(`${state.connection}/${filepath}`, {
-      method: 'POST',
-      body: defaultValue,
-    })
-    return response.ok ? await response[returnType]() : undefined
-  } catch (e) {
-    return undefined
-  }
+  verifyConnection()
+  const response = await fetch(`${getConnection()}/${filepath}`, {
+    method: 'POST',
+    body: defaultValue,
+  })
+  return await handleResponse(response, returnType)
 }
 
 /**
@@ -65,17 +66,10 @@ export async function getSnapshot(filepath, defaultValue, returnType='arrayBuffe
  * @param {string} [returnType='arrayBuffer'] One of 'arrayBuffer' or 'blob' (see fetch API).
  */
 export async function put(filepath, data, returnType='arrayBuffer') {
-  if (!state.connection) {
-    return console.error('pdftest.api.put: Not connected to a server. Use api.connect(url) first.')
-  }
-
-  try {
-    const response = await fetch(`${state.connection}/${filepath}`, {
-      method: 'PUT',
-      body: data,
-    })
-    return response.ok ? await response[returnType]() : undefined
-  } catch (e) {
-    return undefined
-  }
+  verifyConnection()
+  const response = await fetch(`${getConnection()}/${filepath}`, {
+    method: 'PUT',
+    body: data,
+  })
+  return await handleResponse(response, returnType)
 }
