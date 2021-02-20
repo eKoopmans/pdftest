@@ -26,6 +26,7 @@
     "cors": "^2.8.5",
     "esm": "^3.2.25",
     "express": "^4.17.1",
+    "isomorphic-unfetch": "^3.1.0",
     "pdfjs-dist": "^2.3.200",
     "pixelmatch": "^5.2.0"
   },
