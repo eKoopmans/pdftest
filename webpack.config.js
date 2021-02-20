@@ -13,6 +13,7 @@ module.exports = env => {
       mode,
       entry: './src/client/index.js',
       filename: `pdftest.client${minStr}.js`,
+      library: 'pdftest',
       libraryTarget: 'umd',
       umdNamedDefine: true,
       resolve: {
@@ -40,7 +41,7 @@ module.exports = env => {
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: build.filename,
-      library: 'pdftest',
+      library: build.library,
       libraryTarget: build.libraryTarget,
       umdNamedDefine: build.umdNamedDefine,
     },
