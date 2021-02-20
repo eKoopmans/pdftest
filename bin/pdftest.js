@@ -1,13 +1,10 @@
 #!/usr/bin/env node
 
 const { program } = require('commander')
-const esrequire = require('esm')(module)
 const fs = require('fs')
 const path = require('path')
-
+const pdftest = require('../dist/pdftest.cjs.js')
 const pkg = require('../package.json')
-const pdftestServer = esrequire('../src/server')
-const pdftestClient = esrequire('../src/client')
 
 const datastore = path.resolve(__dirname, 'data.json');
 
@@ -15,7 +12,7 @@ program.version(pkg.version, '-v, --version')
 program
   .command('serve [port] [root]')
   .description('Serve PDF files')
-  .action(pdftestServer.serve)
+  .action(pdftest.server.serve)
 program
   .command('start [port] [root]')
   .description('Start a PDF server (non-blocking)')
@@ -39,7 +36,7 @@ async function compare(file1, file2) {
   const data = [file1, file2].map(filename => {
     return new Uint8Array(fs.readFileSync(filename))
   })
-  const res = await pdftestClient.compare(data[0], data[1])
+  const res = await pdftest.client.compare(data[0], data[1])
   console.log(res)
 }
 
