@@ -12,7 +12,7 @@ program.version(pkg.version, '-v, --version')
 program
   .command('serve [port] [root]')
   .description('Serve PDF files')
-  .action(pdftest.server.serve)
+  .action(serve)
 program
   .command('start [port] [root]')
   .description('Start a PDF server (non-blocking)')
@@ -38,6 +38,10 @@ async function compare(file1, file2) {
   })
   const res = await pdftest.client.compare(data[0], data[1])
   console.log(res)
+}
+
+function serve(port, root) {
+  return pdftest.server.serve(port, root).catch(console.error)
 }
 
 function start(port, root) {

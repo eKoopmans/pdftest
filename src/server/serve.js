@@ -30,28 +30,27 @@ function handleHandshake(req, res, next) {
   next()
 }
 
-function setupServer(app, root) {
+function setupServer(root) {
+  const app = express()
   app.use(cors())
   app.use(express.raw({ type: 'application/pdf' }))
   app.use(handlePostPut(root))
   app.use(handleHandshake)
   app.use(express.static(root))
+
+  return app
 }
 
-function serve(port, root) {
-  port = port || 8000
-  root = root || '.'
-
-  const app = express()
-  setupServer(app, root)
-
-  let serverIsListening
-  const serverPromise = new Promise(resolve => { serverIsListening = resolve })
+function serve(port = 8000, root = '.') {
+  let promiseHandler
+  const serverPromise = new Promise((resolve, reject) => { promiseHandler = { resolve, reject } })
+  const app = setupServer(root)
 
   app.listen(port, () => {
     console.log(`pdftest: Serving '${root}' at http://localhost:${port}`)
-    serverIsListening()
+    promiseHandler.resolve()
   })
+  process.on('uncaughtException', promiseHandler.reject)
 
   return serverPromise
 }
