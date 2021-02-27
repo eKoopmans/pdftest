@@ -1,5 +1,5 @@
-import pdfjs from 'pdfjs-dist/build/pdf'
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
+import * as pdfjs from 'pdfjs-dist/build/pdf'
+import * as pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry'
 import { get } from '../../shared/api'
 
 // 2021-01-13 In pdfjs, workerSrc should always be specified, rather than relying
