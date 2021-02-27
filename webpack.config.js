@@ -25,7 +25,7 @@ module.exports = env => {
       entry: './src/index.js',
       filename: `pdftest.cjs.js`,
       libraryTarget: 'commonjs2',
-      externals: ['express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
+      externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
     }
   };
