@@ -4,7 +4,11 @@ Visual PDF comparison tool.
 
 ## Usage
 
-Imports should be done directly via 'src/client' and 'src/server'. Client requires browser and server requires node - there should be no occasion where a single consumer uses both.
+1. Add `pdftest` to your project using `npm install --save-dev pdftest`.
+2. Run the PDF file server using `pdftest serve` (optionally specifying a port and root folder, e.g. `pdftest serve 3000 ./path/to/pdfs/`).
+3. Import or require `pdftest` in your test files, making sure your tests are being run in a browser (e.g. via `karma`).
+4. Connect `pdftest` to the server using `pdftest.api.connect` (e.g. `pdftest.api.connect('http://localhost:3000')`).
+5. Use the comparison functions `pdftest.client.compare` and/or `pdftest.client.compareToSnapshot` to compare PDFs.
 
 ### Running the PDF server with tests
 
