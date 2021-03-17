@@ -32,6 +32,7 @@
   "devDependencies": {
     "@babel/plugin-transform-modules-commonjs": "^7.12.1",
     "jest": "^26.6.3",
+    "rimraf": "^3.0.2",
     "url": "^0.11.0",
     "webpack": "^5.21.2",
     "webpack-bundle-analyzer": "^3.7.0",
@@ -41,7 +42,9 @@
     "pdftest": "./bin/pdftest.js"
   },
   "scripts": {
-    "build": "webpack --env=prod",
+    "build": "npm run clean && webpack --env=prod",
+    "build:analyze": "npm run clean && webpack --env=prod-analyzer",
+    "clean": "rimraf dist",
     "dev": "webpack --env=dev",
     "stage-release": "npx ./build-scripts.js stage-release",
     "release": "npx ./build-scripts.js release",

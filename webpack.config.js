@@ -7,6 +7,7 @@ module.exports = env => {
   const mode = isDev ? 'development' : 'production';
   const minStr = isDev ? '' : '.min';
   const watch = isDev;
+  const useAnalyzer = env.includes('analyze');
 
   const builds = {
     browser: {
@@ -19,6 +20,9 @@ module.exports = env => {
       resolve: {
         fallback: { url: require.resolve('url') },
       },
+      bundleAnalyzer: {
+        analyzerMode: useAnalyzer ? 'server' : 'disabled',
+      },
     },
     node: {
       mode: 'development',
@@ -27,7 +31,10 @@ module.exports = env => {
       libraryTarget: 'commonjs2',
       externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
-    }
+      bundleAnalyzer: {
+        analyzerMode: 'disabled',
+      },
+    },
   };
 
   return Object.values(builds).map(build => ({
@@ -53,12 +60,7 @@ module.exports = env => {
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
       }),
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'disabled',
-        generateStatsFile: true,
-        statsFilename: `stats${minStr}.json`,
-        statsOptions: { source: false },
-      }),
+      new BundleAnalyzerPlugin(build.bundleAnalyzer),
     ],
   }));
 };
