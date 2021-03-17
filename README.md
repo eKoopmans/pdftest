@@ -53,3 +53,11 @@ In most use cases you will need to start the `pdftest` server before running you
       - It is not supported on Windows
 
 For more info, see the discussion of options in the [Cypress documentation](https://docs.cypress.io/guides/guides/continuous-integration.html#Boot-your-server).
+
+## Release process
+
+`npm run stage-release [major/minor/patch]`: Bumps the version and creates a release branch to prepare the new release.
+
+`npm run release [tagmessage]`: Builds the release, tags it, and merges it back into master.
+
+`npm publish`: Publishes the current version to npm.
