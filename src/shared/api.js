@@ -55,6 +55,7 @@ export async function getSnapshot(filepath, defaultValue, returnType='arrayBuffe
   const response = await fetch(`${getConnection()}/${filepath}`, {
     method: 'POST',
     body: defaultValue,
+    headers: { 'Content-Type': 'application/octet-stream' },
   })
   return await handleResponse(response, returnType)
 }
@@ -70,6 +71,7 @@ export async function put(filepath, data, returnType='arrayBuffer') {
   const response = await fetch(`${getConnection()}/${filepath}`, {
     method: 'PUT',
     body: data,
+    headers: { 'Content-Type': 'application/octet-stream' },
   })
   return await handleResponse(response, returnType)
 }

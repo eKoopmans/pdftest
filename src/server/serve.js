@@ -33,7 +33,7 @@ function handleHandshake(req, res, next) {
 function setupServer(root) {
   const app = express()
   app.use(cors())
-  app.use(express.raw({ type: 'application/pdf' }))
+  app.use(express.raw({ type: ['application/octet-stream', 'application/pdf'] }))
   app.use(handlePostPut(root))
   app.use(handleHandshake)
   app.use(express.static(root))
