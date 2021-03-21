@@ -55,6 +55,7 @@ export async function compare(pdf1, pdf2, settings) {
     match: true,
     nPages: Math.max(pdfObjects[0].numPages, pdfObjects[1].numPages),
     pageResults: [],
+    source: [ pdf1, pdf2 ],
   }
 
   // Compare all pages asynchronously and wait for all to finish.
