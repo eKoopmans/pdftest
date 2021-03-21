@@ -3,8 +3,9 @@ import cors from 'cors'
 import path from 'path'
 import fs from 'fs'
 
-function writeFile(path, data) {
-  fs.writeFileSync(path, data)
+function writeFile(filePath, data) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true })
+  fs.writeFileSync(filePath, data)
 }
 
 function handlePostPut(root) {
