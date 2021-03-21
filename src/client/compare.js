@@ -1,5 +1,6 @@
 import pixelmatch from 'pixelmatch'
 import { getPdfObjects, getPageImages } from './util/read-pdf'
+import { showDiff } from './ui'
 import { getSnapshot } from '../shared/api'
 
 async function comparePage(pdfObjects, page, settings) {
@@ -70,5 +71,6 @@ export async function compare(pdf1, pdf2, settings) {
 
 export async function compareToSnapshot(pdf, snapshotName, settings) {
   const snapshot = await getSnapshot(snapshotName, pdf)
-  return await compare(pdf, snapshot, settings)
+  const comparison = await compare(pdf, snapshot, settings)
+  return comparison.match ? comparison : await showDiff(comparison, snapshotName)
 }
