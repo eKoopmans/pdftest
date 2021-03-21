@@ -21,6 +21,13 @@
     "email": "erik@erik-koopmans.com",
     "url": "https://www.erik-koopmans.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eKoopmans/pdftest.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eKoopmans/pdftest/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "commander": "^5.1.0",
