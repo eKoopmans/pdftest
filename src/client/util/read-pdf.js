@@ -56,7 +56,7 @@ async function getPageImage(pdfObject, i, targetWidth) {
   // Note: page.render can take a long time (e.g. 2+ min for an 80MB PDF).
   // Performance could be improved by loading pdf.js with a worker-loader - see:
   // https://github.com/mozilla/pdf.js/tree/master/examples/webpack#worker-loading
-  await page.render({ canvasContext: context, viewport: viewport }).promise
+  await page.render({ canvasContext: context, viewport: viewport, intent: 'print' }).promise
 
   // Return the canvas' imageData with scale info attached.
   const imageData = context.getImageData(0, 0, canvas.width, canvas.height)
