@@ -4,7 +4,7 @@
   "description": "Client-side visual testing library for PDFs",
   "main": "dist/pdftest.cjs.js",
   "module": "src/index.js",
-  "browser": "dist/pdftest.client.js",
+  "browser": "dist/pdftest.client.min.js",
   "files": ["/src", "/dist", "/bin/pdftest.js", "!**/*.test.js"],
   "keywords": [
     "pdf",
