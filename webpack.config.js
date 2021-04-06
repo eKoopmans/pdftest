@@ -27,13 +27,10 @@ module.exports = env => {
     node: {
       mode: 'development',
       entry: './src/index.js',
-      filename: `pdftest.cjs.js`,
+      filename: 'pdftest.cjs.js',
       libraryTarget: 'commonjs2',
       externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
-      bundleAnalyzer: {
-        analyzerMode: 'disabled',
-      },
     },
   };
 
@@ -60,7 +57,7 @@ module.exports = env => {
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
       }),
-      new BundleAnalyzerPlugin(build.bundleAnalyzer),
+      new BundleAnalyzerPlugin(build.bundleAnalyzer || { analyzerMode: 'disabled' }),
     ],
   }));
 };
