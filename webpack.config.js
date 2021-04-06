@@ -32,6 +32,11 @@ module.exports = env => {
       externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
     },
+    'chai-pdftest': {
+      mode: 'development',
+      entry: './src/frameworks/chai-pdftest.js',
+      filename: 'chai-pdftest.js',
+    },
   };
 
   return Object.values(builds).map(build => ({
