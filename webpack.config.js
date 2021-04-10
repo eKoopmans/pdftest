@@ -13,10 +13,13 @@ module.exports = env => {
     browser: {
       mode,
       entry: './src/client/index.js',
-      filename: `pdftest.client${minStr}.js`,
-      library: 'pdftest',
-      libraryTarget: 'umd',
-      umdNamedDefine: true,
+      target: 'browserslist',
+      output: {
+        filename: `pdftest.client${minStr}.js`,
+        library: 'pdftest',
+        libraryTarget: 'umd',
+        umdNamedDefine: true,
+      },
       resolve: {
         fallback: { url: require.resolve('url') },
       },
@@ -27,21 +30,32 @@ module.exports = env => {
     node: {
       mode: 'development',
       entry: './src/index.js',
-      filename: 'pdftest.cjs.js',
-      libraryTarget: 'commonjs2',
+      target: 'node',
+      output: {
+        filename: 'pdftest.cjs.js',
+        libraryTarget: 'commonjs2',
+      },
       externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
+      babelOptions: {
+        presets: ['@babel/preset-env'],
+        targets: { node: "current" },
+      },
     },
     'chai-pdftest': {
-      mode: 'development',
+      mode,
       entry: './src/frameworks/chai-pdftest.js',
-      filename: 'chai-pdftest.js',
+      target: 'browserslist',
+      output: {
+        filename: `chai-pdftest${minStr}.js`,
+      },
     },
   };
 
   return Object.values(builds).map(build => ({
     mode: build.mode,
     entry: build.entry,
+    target: build.target,
     watch: watch,
     watchOptions: {
       ignored: /node_modules/,
@@ -49,10 +63,7 @@ module.exports = env => {
     devtool: 'source-map',
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: build.filename,
-      library: build.library,
-      libraryTarget: build.libraryTarget,
-      umdNamedDefine: build.umdNamedDefine,
+      ...build.output,
     },
     node: false,
     externals: build.externals,
@@ -64,5 +75,17 @@ module.exports = env => {
       }),
       new BundleAnalyzerPlugin(build.bundleAnalyzer || { analyzerMode: 'disabled' }),
     ],
+    module: {
+      rules: [
+        {
+          test: /\.m?js$/,
+          exclude: new RegExp(path.join('node_modules', '(?!pixelmatch)').replace('\\', '\\\\')),
+          use: {
+            loader: "babel-loader",
+            options: build.babelOptions,
+          },
+        },
+      ],
+    },
   }));
 };
