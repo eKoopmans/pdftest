@@ -1,5 +1,9 @@
 /* global window */
 
+if (typeof window === 'undefined' || !window.Mocha || !window.chai) {
+  throw new Error('chai-pdftest requires access to window.Mocha and window.chai.')
+}
+
 // Slimmed-down version of lodash/kebabcase, without toString or unicode logic.
 function kebabCase(string) {
   const reAsciiWord = /[^\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]+/g
