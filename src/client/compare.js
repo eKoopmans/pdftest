@@ -1,4 +1,4 @@
-import pixelmatch from 'pixelmatch'
+import * as pixelmatch from 'pixelmatch'
 import { getPdfObjects, getPageImages } from './util/read-pdf'
 import { showDiff } from './ui'
 import { getSnapshot } from '../shared/api'
