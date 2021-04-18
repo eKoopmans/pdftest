@@ -6,22 +6,13 @@ export async function showDiff(comparison, snapshotName) {
   // - handle comparison errors (e.g. mismatched # of pages or page sizes)
   // - allow showDiff to be skipped (e.g. on CI/CD)
 
-  // showDiff fails in IE due to a TypeMismatchError: the ImageData type is
-  // modified in the base window, but not in the popup window, which causes
-  // issues on putImageData.
-  const isIE = /*@cc_on!@*/false || !!document.documentMode
-  if (isIE) {
-    console.error('showDiff is not available on Internet Explorer.')
-    return comparison
-  }
-
   const popupWindow = window.open('', '_blank', 'width=400,height=700')
   const popupDocument = popupWindow.document
   popupDocument.body.innerHTML = `
     <h3>Visual change detected</h3>
     <p>How would you like to treat the new PDF?</p>
     <div>
-      <canvas id="diffCanvas" style="width: 100%; border: 1px solid black;"></canvas>
+      <img id="diffImg" style="width: 100%; border: 1px solid black;">
     </div>
     <div>
       <button id="ignore">Ignore (Skip)</button>
@@ -30,11 +21,14 @@ export async function showDiff(comparison, snapshotName) {
     </div>
   `
 
-  const canvas = popupDocument.body.querySelector('#diffCanvas')
+  const canvas = document.createElement('canvas')
   const diffImg = comparison.pageResults[0].diffImg
   canvas.width = diffImg.width
   canvas.height = diffImg.height
   canvas.getContext('2d').putImageData(diffImg, 0, 0)
+
+  const targetImg = popupDocument.body.querySelector('#diffImg')
+  targetImg.src = canvas.toDataURL('image/png')
 
   return new Promise((resolve, reject) => {
     const resolveAndClose = (value) => {
