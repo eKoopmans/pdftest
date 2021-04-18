@@ -72,5 +72,7 @@ export async function compare(pdf1, pdf2, options) {
 export async function compareToSnapshot(pdf, snapshotName, options) {
   const snapshot = await getSnapshot(snapshotName, pdf)
   const comparison = await compare(pdf, snapshot, options)
-  return comparison.match ? comparison : await showDiff(comparison, snapshotName)
+  const doShowDiff = !comparison.match && options.interactive
+
+  return doShowDiff ? await showDiff(comparison, snapshotName) : comparison
 }

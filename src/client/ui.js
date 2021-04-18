@@ -4,7 +4,6 @@ export async function showDiff(comparison, snapshotName) {
   // TODO:
   // - fix this to show all diff pages (rather than just page 0)
   // - handle comparison errors (e.g. mismatched # of pages or page sizes)
-  // - allow showDiff to be skipped (e.g. on CI/CD)
 
   const popupWindow = window.open('', '_blank', 'width=400,height=700')
   const popupDocument = popupWindow.document
