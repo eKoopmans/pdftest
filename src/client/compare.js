@@ -18,7 +18,7 @@ async function comparePage(pdfObjects, page, settings) {
     // Create a canvas and run pixelmatch.
     const diffCanvas = document.createElement('canvas')
     diffImg = diffCanvas.getContext('2d').createImageData(pageImg1.width, pageImg1.height)
-    numDiffPixels = pixelmatch(pageImg1.data, pageImg2.data, diffImg.data, diffImg.width, diffImg.height, settings.pixelmatch)
+    numDiffPixels = pixelmatch(pageImg1.data, pageImg2.data, diffImg.data, diffImg.width, diffImg.height, settings.customDiffConfig)
 
     // Determine whether the page matches according to failureThreshold.
     if (settings.failureThresholdType === 'percent') {
@@ -44,7 +44,7 @@ export async function compare(pdf1, pdf2, settings) {
   settings = {
     failureThreshold: 0,
     failureThresholdType: 'pixel',
-    pixelmatch: { threshold: 0.1 },
+    customDiffConfig: { threshold: 0.1 },
     ...settings
   }
 

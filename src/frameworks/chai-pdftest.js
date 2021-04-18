@@ -31,8 +31,8 @@ window.Mocha.Runnable.prototype.run = function () {
   return run_original.apply(this, arguments)
 }
 
-window.chai.Assertion.addMethod('matchPdfSnapshot', async function (options) {
-  const { customDiffConfig, customSnapshotIdentifier } = options || {}
+window.chai.Assertion.addMethod('matchPdfSnapshot', async function (options = {}) {
+  const { customSnapshotIdentifier } = options
 
   // Remove timeouts so the PDF snapshot GUI can wait on user feedback.
   mochaContext.context.timeout(0)
@@ -41,6 +41,6 @@ window.chai.Assertion.addMethod('matchPdfSnapshot', async function (options) {
   const snapshotIdentifier = customSnapshotIdentifier || createSnapshotIdentifier(mochaTest, mochaContext.index++)
 
   const obj = this._obj
-  const result = await pdftest.compareToSnapshot(obj, snapshotIdentifier, customDiffConfig)
+  const result = await pdftest.compareToSnapshot(obj, snapshotIdentifier, options)
   this.assert(result.match === true, `PDF does not match stored snapshot ${snapshotIdentifier}.`, `PDF matches stored snapshot ${snapshotIdentifier}.`)
 })

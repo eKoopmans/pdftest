@@ -19,7 +19,7 @@
       pdftest.api.connect('http://localhost:3000');
 
       function compare() {
-        var settings = { pixelmatch: { threshold: 0.5 } };
+        var settings = { customDiffConfig: { threshold: 0.5 } };
         pdftest.compare(pdfFile1.files[0], pdfFile2.files[0], settings).then(function(result) {
           console.log(result);
           var diffCanvas = document.querySelector('#diffCanvas');
