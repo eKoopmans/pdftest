@@ -35,7 +35,7 @@ module.exports = env => {
         filename: 'pdftest.cjs.js',
         libraryTarget: 'commonjs2',
       },
-      externals: ['cors', 'express', 'fs', 'isomorphic-unfetch', 'path', /pdfjs/, 'pixelmatch'],
+      externals: ['cors', 'express', 'fs', 'cross-fetch', 'path', /pdfjs/, 'pixelmatch'],
       externalsType: 'commonjs',
       babelOptions: {
         presets: ['@babel/preset-env'],

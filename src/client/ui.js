@@ -6,6 +6,15 @@ export async function showDiff(comparison, snapshotName) {
   // - handle comparison errors (e.g. mismatched # of pages or page sizes)
   // - allow showDiff to be skipped (e.g. on CI/CD)
 
+  // showDiff fails in IE due to a TypeMismatchError: the ImageData type is
+  // modified in the base window, but not in the popup window, which causes
+  // issues on putImageData.
+  const isIE = /*@cc_on!@*/false || !!document.documentMode
+  if (isIE) {
+    console.error('showDiff is not available on Internet Explorer.')
+    return comparison
+  }
+
   const popupWindow = window.open('', '_blank', 'width=400,height=700')
   const popupDocument = popupWindow.document
   popupDocument.body.innerHTML = `

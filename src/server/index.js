@@ -1,4 +1,3 @@
-import 'isomorphic-unfetch'
 import serve from './serve'
 import * as api from '../shared/api'
 
