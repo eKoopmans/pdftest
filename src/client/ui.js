@@ -34,6 +34,7 @@ export async function showDiff(comparison, snapshotName) {
       resolve({ ...comparison, match: value })
       popupWindow.close()
     }
+    popupWindow.addEventListener('unload', () => resolveAndClose(false))
     popupDocument.querySelector('#ignore').addEventListener('click', () => resolveAndClose(true))
     popupDocument.querySelector('#reject').addEventListener('click', () => resolveAndClose(false))
     popupDocument.querySelector('#accept').addEventListener('click', async () => {
