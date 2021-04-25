@@ -64,6 +64,7 @@
     "dev": "webpack --env=dev",
     "stage-release": "node ./build-scripts.js stage-release",
     "release": "node ./build-scripts.js release",
+    "publish-gh": "node ./build-scripts.js publish-gh",
     "serve": "node ./bin/pdftest.js serve 3000 ./test/ref/",
     "test": "jest"
   }
