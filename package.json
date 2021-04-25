@@ -1,6 +1,6 @@
 {
   "name": "pdftest",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Client-side visual testing library for PDFs",
   "main": "dist/pdftest.cjs.js",
   "module": "src/index.js",
