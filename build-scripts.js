@@ -13,6 +13,10 @@ program
   .command('release [tagmessage]')
   .description('Tag and merge the latest release into master')
   .action(release)
+program
+  .command('publish-gh')
+  .description('Push master and release branches to GitHub with tags')
+  .action(publishGH)
 program.parse(process.argv);
 
 /* ----- HELPER ----- */
@@ -73,4 +77,8 @@ async function release(tagmessage) {
 
   // console.log('Deleting release branch.');
   // return exec(`git branch -d ${getReleaseBranch()}`);
+}
+
+function publishGH() {
+  return exec(`git push --follow-tags origin master ${getReleaseBranch()}`);
 }
