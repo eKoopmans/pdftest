@@ -42,7 +42,8 @@ async function compare(file1, file2) {
 }
 
 function serve(port, root, options) {
-  return pdftest.server.serve(port, root, options).catch(console.error)
+  const cleanedOptions = { limit: options.limit };
+  return pdftest.server.serve(port, root, cleanedOptions).catch(console.error)
 }
 
 function start(port, root) {
