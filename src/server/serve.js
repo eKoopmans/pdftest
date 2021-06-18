@@ -43,17 +43,16 @@ function setupServer(root) {
 }
 
 function serve(port = 8000, root = '.') {
-  let promiseHandler
-  const serverPromise = new Promise((resolve, reject) => { promiseHandler = { resolve, reject } })
   const app = setupServer(root)
 
-  app.listen(port, () => {
-    console.log(`pdftest: Serving '${root}' at http://localhost:${port}`)
-    promiseHandler.resolve()
-  })
-  process.on('uncaughtException', promiseHandler.reject)
+  return new Promise((resolve, reject) => {
+    app.listen(port, () => {
+      console.log(`pdftest: Serving '${root}' at http://localhost:${port}`)
+      resolve()
+    })
 
-  return serverPromise
+    process.on('uncaughtException', reject)
+  })
 }
 
 export default serve
