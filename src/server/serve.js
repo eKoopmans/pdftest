@@ -31,10 +31,10 @@ function handleHandshake(req, res, next) {
   next()
 }
 
-function setupServer(root) {
+function setupServer(root, options) {
   const app = express()
   app.use(cors())
-  app.use(express.raw({ type: ['application/octet-stream', 'application/pdf'] }))
+  app.use(express.raw({ type: ['application/octet-stream', 'application/pdf'], limit: options.limit || '100mb' }))
   app.use(handlePostPut(root))
   app.use(handleHandshake)
   app.use(express.static(root))
@@ -42,8 +42,8 @@ function setupServer(root) {
   return app
 }
 
-function serve(port = 8000, root = '.') {
-  const app = setupServer(root)
+function serve(port = 8000, root = '.', options) {
+  const app = setupServer(root, options)
 
   return new Promise((resolve, reject) => {
     app.listen(port, () => {

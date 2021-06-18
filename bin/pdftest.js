@@ -12,6 +12,7 @@ program.version(pkg.version, '-v, --version')
 program
   .command('serve [port] [root]')
   .description('Serve PDF files')
+  .option('--limit <file-size>', 'File size limit (default="100mb")')
   .action(serve)
 program
   .command('start [port] [root]')
@@ -40,8 +41,8 @@ async function compare(file1, file2) {
   console.log(res)
 }
 
-function serve(port, root) {
-  return pdftest.server.serve(port, root).catch(console.error)
+function serve(port, root, options) {
+  return pdftest.server.serve(port, root, options).catch(console.error)
 }
 
 function start(port, root) {
