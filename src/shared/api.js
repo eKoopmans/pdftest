@@ -4,19 +4,19 @@ const state = {
   connection: null,
 }
 
-export async function connect(url) {
+export async function connect(url, options = {}) {
   state.connection = url
-  return await handshake()
+  await handshake()
+  options.verbose && console.log(`pdftest: Successfully connected to ${getConnection()}.`)
 }
 
 export function getConnection() {
   return state.connection
 }
 
-async function handshake() {
+function handshake() {
   try {
-    await get('', 'text')
-    return console.log(`pdftest: Successfully connected to ${getConnection()}.`)
+    return get('', 'text')
   } catch (e) {
     throw new Error(`Failed to connect to ${getConnection()}: ${e.message}`)
   }

@@ -48,7 +48,7 @@ function serve(port = 8000, root = '.', options = {}) {
   return new Promise((resolve, reject) => {
     const server = app.listen(port, () => {
       const optionsText = JSON.stringify(options) === '{}' ? '' : ` with options ${JSON.stringify(options)}`;
-      console.log(`pdftest: Serving '${root}' at http://localhost:${port}${optionsText}`)
+      options.verbose && console.log(`pdftest: Serving '${root}' at http://localhost:${port}${optionsText}`)
       resolve(server)
     })
 
