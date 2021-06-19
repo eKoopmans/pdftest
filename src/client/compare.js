@@ -13,7 +13,7 @@ async function comparePage(pdfObjects, page, options) {
   const [ pageImg1, pageImg2, error ] = await getPageImages(pdfObjects, page)
 
   if (error) {
-    options.verbose && console.error(error)
+    options.verbose && console.log(`pdftest: Page ${page + 1} comparison failed with error '${error}'`)
   } else {
     // Create a canvas and run pixelmatch.
     const diffCanvas = document.createElement('canvas')
@@ -32,10 +32,11 @@ async function comparePage(pdfObjects, page, options) {
 
   // Build results for the current page.
   return {
-    match: match,
+    match,
     pageImg: [pageImg1, pageImg2],
-    diffImg: diffImg,
-    numDiffPixels: numDiffPixels,
+    diffImg,
+    numDiffPixels,
+    error,
   }
 }
 

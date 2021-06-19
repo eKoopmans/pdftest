@@ -70,10 +70,10 @@ async function getPageImages(pdfObjects, page) {
 
   // Handle incompatible pages.
   if (!pageImg1 || !pageImg2) {
-    error = { type: 'missing_page', data: [pageImg1, pageImg2] }
+    error = 'missing_page'
   }
   else if (pageImg1.width !== pageImg2.width || pageImg1.height !== pageImg2.height) {
-    error = { type: 'mismatched_size', data: [pageImg1, pageImg2] }
+    error = 'mismatched_size'
   }
 
   return [ pageImg1, pageImg2, error ]
