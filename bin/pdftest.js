@@ -17,6 +17,7 @@ program
 program
   .command('start [port] [root]')
   .description('Start a PDF server (non-blocking)')
+  .option('--limit <file-size>', 'File size limit (default="100mb")')
   .action(start)
 program
   .command('stop [port]')
@@ -46,15 +47,17 @@ function serve(port, root, options) {
   return pdftest.server.serve(port, root, cleanedOptions).catch(console.error)
 }
 
-function start(port, root) {
+function start(port = 'default (8000)') {
   const { spawn } = require('child_process')
-  const args = root ? [port, root] : port ? [port] : []
 
   stop(port)
 
-  console.log(`pdftest: Starting server${port ? ` on port ${port}` : ''}`)
+  // Pass command-line arguments through to 'serve'.
+  const args = process.argv.slice(process.argv.indexOf('start') + 1);
+
+  console.log(`pdftest: Starting server on port ${port}`)
   const serverProcess = spawn('node', [__filename, 'serve', ...args], {
-    stdio: [process.stdin, process.stdout, process.stderr],
+    stdio: 'ignore',
     detached: true,
   })
   serverProcess.unref()
@@ -64,14 +67,13 @@ function start(port, root) {
   fs.writeFileSync(datastore, JSON.stringify(data))
 }
 
-function stop(port) {
+function stop(port = 'default (8000)') {
   const data = fs.existsSync(datastore) ? JSON.parse(fs.readFileSync(datastore) || '{}') : {}
 
   if (data[port]) {
-    console.log(`pdftest: Stopping server${port ? ` on port ${port}` : ''}`)
+    console.log(`pdftest: Stopping server on port ${port}`)
     try { process.kill(data[port].pid) } catch {}
     delete data[port]
+    fs.writeFileSync(datastore, JSON.stringify(data))
   }
-
-  fs.writeFileSync(datastore, JSON.stringify(data))
 }
