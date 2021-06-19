@@ -75,13 +75,19 @@ function start(port = 'default (8000)', root, options) {
   fs.writeFileSync(datastore, JSON.stringify(data))
 }
 
-function stop(port = 'default (8000)') {
+function stop(port = 'all') {
   const data = fs.existsSync(datastore) ? JSON.parse(fs.readFileSync(datastore) || '{}') : {}
+  const ports = port === 'all' ? Object.keys(data) : [ port ];
+  let anyChange = false;
 
-  if (data[port]) {
-    console.log(`pdftest: Stopping server on port ${port}`)
-    try { process.kill(data[port].pid) } catch {}
-    delete data[port]
-    fs.writeFileSync(datastore, JSON.stringify(data))
-  }
+  ports.forEach(port => {
+    if (data[port]) {
+      console.log(`pdftest: Stopping server on port ${port}`)
+      try { process.kill(data[port].pid) } catch {}
+      delete data[port]
+      anyChange = true
+    }
+  });
+
+  anyChange && fs.writeFileSync(datastore, JSON.stringify(data))
 }
