@@ -46,10 +46,10 @@ function serve(port = 8000, root = '.', options = {}) {
   const app = setupServer(root, options)
 
   return new Promise((resolve, reject) => {
-    app.listen(port, () => {
+    const server = app.listen(port, () => {
       const optionsText = JSON.stringify(options) === '{}' ? '' : ` with options ${JSON.stringify(options)}`;
       console.log(`pdftest: Serving '${root}' at http://localhost:${port}${optionsText}`)
-      resolve()
+      resolve(server)
     })
 
     process.on('uncaughtException', reject)
