@@ -94,4 +94,19 @@ describe('serve', () => {
       expect(response.status).toBe(404);
     });
   });
+
+  describe('file size limit', () => {
+    it('should allow POST/PUT data under the limit', async () => {
+      server = await serve(undefined, undefined, { limit: '12b' });
+      const res = await standardPostPut('some/directory/test.pdf', 'PUT', '< 12 bytes');
+      expect(res.status).toBe(404);
+    });
+
+    it('should fail when POST/PUT data is larger than the limit', async () => {
+      server = await serve(undefined, undefined, { limit: '12b' });
+      const res = await standardPostPut('some/directory/test.pdf', 'PUT', '> 12 bytes: error');
+      expect(res.status).toBe(413);
+      expect(res.statusText).toBe('Payload Too Large');
+    });
+  });
 });
