@@ -13,11 +13,13 @@ program
   .command('serve [port] [root]')
   .description('Serve PDF files')
   .option('--limit <file-size>', 'File size limit (default="100mb")')
+  .option('--debug', 'Debug mode')
   .action(serve)
 program
   .command('start [port] [root]')
   .description('Start a PDF server (non-blocking)')
   .option('--limit <file-size>', 'File size limit (default="100mb")')
+  .option('--debug', 'Debug mode')
   .action(start)
 program
   .command('stop [port]')
@@ -47,7 +49,7 @@ function serve(port, root, options) {
   return pdftest.server.serve(port, root, cleanedOptions).catch(console.error)
 }
 
-function start(port = 'default (8000)') {
+function start(port = 'default (8000)', root, options) {
   const { spawn } = require('child_process')
 
   stop(port)
@@ -57,10 +59,16 @@ function start(port = 'default (8000)') {
 
   console.log(`pdftest: Starting server on port ${port}`)
   const serverProcess = spawn('node', [__filename, 'serve', ...args], {
-    stdio: 'ignore',
+    stdio: options.debug ? 'pipe' : 'ignore',
     detached: true,
   })
   serverProcess.unref()
+
+  if (options.debug) {
+    serverProcess.stdin.pipe(process.stdin)
+    serverProcess.stdout.pipe(process.stdout)
+    serverProcess.stderr.pipe(process.stderr)
+  }
 
   const data = fs.existsSync(datastore) ? JSON.parse(fs.readFileSync(datastore) || '{}') : {}
   data[port] = { pid: serverProcess.pid }
