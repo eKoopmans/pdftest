@@ -61,3 +61,5 @@ For more info, see the discussion of options in the [Cypress documentation](http
 `npm run release [tagmessage]`: Builds the release, tags it, and merges it back into master.
 
 `npm publish`: Publishes the current version to npm.
+
+Make sure to define `.env` with environment variables used by [`@sortpark/build-tools`](https://github.com/sortpark/build-tools) - see `.env.sample` for example values.

@@ -45,6 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
+    "@sortpark/build-tools": "^0.1.0",
     "babel-loader": "^8.2.2",
     "core-js": "^3.10.1",
     "jest": "^26.6.3",
@@ -62,9 +63,9 @@
     "build:analyze": "npm run clean && webpack --env=prod-analyzer",
     "clean": "rimraf dist",
     "dev": "webpack --env=dev",
-    "stage-release": "node ./build-scripts.js stage-release",
-    "release": "node ./build-scripts.js release",
-    "publish-gh": "node ./build-scripts.js publish-gh",
+    "stage-release": "build-tools stage-release",
+    "release": "build-tools release",
+    "publish-gh": "build-tools publish-gh",
     "serve": "node ./bin/pdftest.js serve 3000 ./test/ref/",
     "test": "jest"
   }
