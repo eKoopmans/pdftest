@@ -7,8 +7,11 @@ Visual PDF comparison tool.
 1. Add `pdftest` to your project using `npm install --save-dev pdftest`.
 2. Run the PDF file server using `pdftest serve` (optionally specifying a port and root folder, e.g. `pdftest serve 3000 ./path/to/pdfs/`).
 3. Import or require `pdftest` in your test files, making sure your tests are being run in a browser (e.g. via `karma`).
-4. Connect `pdftest` to the server using `pdftest.api.connect` (e.g. `pdftest.api.connect('http://localhost:3000')`).
+4. Connect `pdftest` to the server using `pdftest.client.api.connect` (e.g. `pdftest.client.api.connect('http://localhost:3000')`).
 5. Use the comparison functions `pdftest.client.compare` and/or `pdftest.client.compareToSnapshot` to compare PDFs.
+
+Note: When using the main browser dist (`pdftest.client.min.js`), you will have access to *only* the client methods, which will be exposed directly on the `pdftest` exposed variable.
+E.g. in the browser, you should invoke `pdftest.api.connect` and `pdftest.compare`, rather than `pdftest.client.api.connect` / `pdftest.client.compare`.
 
 ### Running the PDF server with tests
 
